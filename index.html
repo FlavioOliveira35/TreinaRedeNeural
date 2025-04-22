@@ -180,7 +180,7 @@
 
     calculateProbabilities();
  // Carrega os dados do arquivo JSON externo ao iniciar
-fetch("ultimos500.json")
+fetch("https://github.com/FlavioOliveira35/lo/blob/main/ultimos500.json")
   .then(response => {
     if (!response.ok) {
       throw new Error("Erro ao carregar o arquivo JSON");
