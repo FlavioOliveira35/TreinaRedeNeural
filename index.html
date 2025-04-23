@@ -111,16 +111,16 @@
 
 <body>
     <div class="container">
-        <h1>Lotofácil - Curvatura Estatística e IA Avançada v2</h1>
+        <h1>ANÁLISE - Curvatura Estatística e IA Avançada(REDE NEURAL)</h1>
 
         <div class="input-section">
-            <label for="numbers">Cadastre os números sorteados (separados por vírgula): </label><br>
+            <label for="numbers">Cadastre os resultados atuais (separados por vírgula): </label><br>
             <input type="text" id="numbers" placeholder="Ex: 1,2,3,4,5,...">
-            <button onclick="addDraw()">Cadastrar Sorteio</button>
+            <button onclick="addDraw()">Cadastrar Resultado</button>
         </div>
 
         <div class="result-section">
-            <h3>Números mais prováveis para o próximo sorteio</h3>
+            <h3>Números mais prováveis para o próximo EVENTO</h3>
             <ul id="suggestions"></ul>
         </div>
 
@@ -129,7 +129,7 @@
     </div>
 
     <script>
-       //Função para armazenar os sorteios no localStorage
+       //Função para armazenar os RESULTADOS JSON no localStorage
         function addDraw() {
             const input = document.getElementById("numbers").value;
             const drawNumbers = input.split(",").map(num => parseInt(num.trim()));
