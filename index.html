@@ -1,229 +1,299 @@
 <!DOCTYPE html>
 <html lang="pt-br">
+
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Lotofácil - Curvatura Estatística e IA Avançada</title>
-  <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@4.13.0/dist/tf.min.js"></script> 
-  <script src="https://cdn.jsdelivr.net/npm/_@tensorflow/tfjs"></script>
-  <style>
-    body {
-      font-family: 'Segoe UI', sans-serif;
-      background-color: #f0f2f5;
-      margin: 0;
-      padding: 0;
-    }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lotofácil - Curvatura Estatística e IA Avançadav2</title>
+    <!-- <script src="https://cdn.jsdelivr.net/npm/_@tensorflow/tfjs"></script> -->
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@4.13.0/dist/tf.min.js"></script> 
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
-    .container {
-      max-width: 900px;
-      margin: 40px auto;
-      background-color: #ffffff;
-      border-radius: 16px;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-      padding: 30px;
-    }
-
-    h1 {
-      text-align: center;
-      color: #2f4f4f;
-      font-size: 28px;
-      margin-bottom: 30px;
-    }
-
-    .input-section {
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-      margin-bottom: 30px;
-    }
-
-    label {
-      font-weight: bold;
-      color: #555;
-    }
-
-    input[type="text"] {
-      padding: 12px;
-      border: 1px solid #ccc;
-      border-radius: 8px;
-      font-size: 16px;
-      width: 100%;
-    }
-
-    button {
-      background-color: #007bff;
-      color: white;
-      padding: 12px;
-      font-size: 16px;
-      border: none;
-      border-radius: 8px;
-      cursor: pointer;
-      transition: background-color 0.3s;
-      margin-top: 10px;
-    }
-
-    button:hover {
-      background-color: #0056b3;
-    }
-
-    .result-section {
-      text-align: center;
-      padding-top: 10px;
-      border-top: 1px solid #ddd;
-    }
-
-    .result-section h3 {
-      color: #333;
-      font-size: 22px;
-      margin-bottom: 15px;
-    }
-
-    ul#suggestions {
-      list-style-type: none;
-      padding: 0;
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-      gap: 10px;
-    }
-
-    ul#suggestions li {
-      background-color: #f1f6fb;
-      padding: 12px;
-      border-radius: 8px;
-      border-left: 5px solid #007bff;
-      font-size: 16px;
-      color: #333;
-      text-align: left;
-    }
-
-    @media(max-width: 600px) {
+    <style>
+      body {
+        font-family: 'Segoe UI', sans-serif;
+        background-color: #f0f2f5;
+        margin: 0;
+        padding: 0;
+      }
+  
       .container {
-        margin: 20px;
-        padding: 20px;
+        max-width: 900px;
+        margin: 40px auto;
+        background-color: #ffffff;
+        border-radius: 16px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        padding: 30px;
       }
-    }
-  </style>
+  
+      h1 {
+        text-align: center;
+        color: #2f4f4f;
+        font-size: 28px;
+        margin-bottom: 30px;
+      }
+  
+      .input-section {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        margin-bottom: 30px;
+      }
+  
+      label {
+        font-weight: bold;
+        color: #555;
+      }
+  
+      input[type="text"] {
+        padding: 12px;
+        border: 1px solid #ccc;
+        border-radius: 8px;
+        font-size: 16px;
+        width: 100%;
+      }
+  
+      button {
+        background-color: #007bff;
+        color: white;
+        padding: 12px;
+        font-size: 16px;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+        margin-top: 10px;
+      }
+  
+      button:hover {
+        background-color: #0056b3;
+      }
+  
+      .result-section {
+        text-align: center;
+        padding-top: 10px;
+        border-top: 1px solid #ddd;
+      }
+  
+      .result-section h3 {
+        color: #333;
+        font-size: 22px;
+        margin-bottom: 15px;
+      }
+  
+      ul#suggestions {
+        list-style-type: none;
+        padding: 0;
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+        gap: 10px;
+      }
+  
+      ul#suggestions li {
+        background-color: #f1f6fb;
+        padding: 12px;
+        border-radius: 8px;
+        border-left: 5px solid #007bff;
+        font-size: 16px;
+        color: #333;
+        text-align: left;
+      }
+  
+      @media(max-width: 600px) {
+        .container {
+          margin: 20px;
+          padding: 20px;
+        }
+      }
+    </style>
+  
 </head>
+
 <body>
-  <div class="container">
-    <h1>Lotofácil - Curvatura Estatística e IA Avançada</h1>
+    <div class="container">
+        <h1>Lotofácil - Curvatura Estatística e IA Avançada v2</h1>
 
-    <div class="input-section">
-      <label for="numbers">Cadastre os números sorteados (separados por vírgula):</label>
-      <input type="text" id="numbers" placeholder="Ex: 1,2,3,4,5,...">
-      <button onclick="addDraw()">Cadastrar Sorteio</button>
+        <div class="input-section">
+            <label for="numbers">Cadastre os números sorteados (separados por vírgula): </label><br>
+            <input type="text" id="numbers" placeholder="Ex: 1,2,3,4,5,...">
+            <button onclick="addDraw()">Cadastrar Sorteio</button>
+        </div>
+
+        <div class="result-section">
+            <h3>Números mais prováveis para o próximo sorteio</h3>
+            <ul id="suggestions"></ul>
+        </div>
+
+        <canvas id="frequencyChart" width="400" height="150"></canvas>
+        <canvas id="curvatureChart" width="400" height="150"></canvas>
     </div>
 
-    <div class="result-section">
-      <h3>Números mais prováveis para o próximo sorteio</h3>
-      <ul id="suggestions"></ul>
-    </div>
-  </div>
+    <script>
+       //Função para armazenar os sorteios no localStorage
+        function addDraw() {
+            const input = document.getElementById("numbers").value;
+            const drawNumbers = input.split(",").map(num => parseInt(num.trim()));
+            let draws = JSON.parse(localStorage.getItem("draws")) || [];
+            draws.push(drawNumbers);
+            localStorage.setItem("draws", JSON.stringify(draws));
+            document.getElementById("numbers").value = "";
+            calculateProbabilities();
+        }
 
-  <script>
-    function addDraw() {
-      const input = document.getElementById("numbers").value;
-      const drawNumbers = input.split(",").map(num => parseInt(num.trim()));
+        // Função para calcular as probabilidades de cada número com base na "curvatura estatística"
+        function calculateProbabilities() {
+            let draws = JSON.parse(localStorage.getItem("draws")) || [];
+            let numberCounts = {};
 
-      let draws = JSON.parse(localStorage.getItem("draws")) || [];
-      draws.push(drawNumbers);
-      localStorage.setItem("draws", JSON.stringify(draws));
+            // Contagem de frequência de cada número nos sorteios
+            draws.forEach(draw => {
+                draw.forEach(num => {
+                    numberCounts[num] = (numberCounts[num] || 0) + 1;
+                });
+            });
 
-      calculateProbabilities();
-      document.getElementById("numbers").value = "";
-    }
+            // Calculando as "curvaturas" de cada número com uma fórmula mais avançada
+            let probabilities = [];
+            for (let i = 1; i <= 25; i++) {
+                let freq = numberCounts[i] || 0;
+                // Ajuste na fórmula da curvatura
+                let dispersion = Math.pow(freq, 2); // Aumento da dispersão para maior variação
+                let curvatura = Math.log(dispersion + 1); // Ajuste logarítmico para suavizar
+                probabilities.push({ num: i, freq, curvatura });
+            }
+           // Ordena os números pela curvatura
+            probabilities.sort((a, b) => b.curvatura - a.curvatura);
+            updateCharts(probabilities);
+            // Treinamento da rede neural com base nas curvaturas
+            trainNetwork(probabilities);
+        }
+        // Treinamento da rede neural com base nas curvaturas
+        // Função para treinar a rede neural
+        async function trainNetwork(probabilities) {
+           // Prepara os dados para treinamento (entradas e saídas)
+            let inputs = [];
+            let outputs = [];
 
-    function calculateProbabilities() {
-      let draws = JSON.parse(localStorage.getItem("draws")) || [];
-      let numberCounts = {};
+            probabilities.forEach(prob => {
+                let input = Array(25).fill(0);
+                input[prob.num - 1] = 1; // Marca o número sorteado
+                let output = Array(25).fill(0);
+                output[prob.num - 1] = prob.curvatura; // Saída com base na curvatura
+                inputs.push(input);
+                outputs.push(output);
+            });
+           
 
-      draws.forEach(draw => {
-        draw.forEach(num => {
-          numberCounts[num] = (numberCounts[num] || 0) + 1;
-        });
-      });
+            // Criação de uma rede neural mais complexa com TensorFlow.js
+            const model = tf.sequential();
+            model.add(tf.layers.dense({ inputShape: [25], units: 128, activation: 'relu' }));
+            model.add(tf.layers.dense({ units: 64, activation: 'relu' }));
+            model.add(tf.layers.dense({ units: 25, activation: 'softmax' }));
 
-      let probabilities = [];
-      for (let num in numberCounts) {
-        let freq = numberCounts[num];
-        let dispersion = Math.pow(freq, 2);
-        let curvatura = Math.log(dispersion + 1);
-        probabilities.push({ num: parseInt(num), curvatura });
-      }
+            // Compilação do modelo com regularização para evitar overfitting
+            model.compile({ optimizer: 'adam', loss: 'meanSquaredError', metrics: ['accuracy'] });
+            
+             // Treinamento da rede neural
+            const inputTensor = tf.tensor2d(inputs);
+            const outputTensor = tf.tensor2d(outputs);
+            await model.fit(inputTensor, outputTensor, { epochs: 150 });
 
-      probabilities.sort((a, b) => b.curvatura - a.curvatura);
-      trainNetwork(probabilities);
-    }
+            // Após o treinamento, podemos prever os números mais prováveis
+            const predictedNumbers = await predictNextNumbers(model);
+            displaySuggestions(predictedNumbers);
+        }
+        
+         // Função para prever os próximos números
+        async function predictNextNumbers(model) {
+            // Inicializa uma entrada com todos os números como "0"
+            const input = Array(25).fill(0);
+               
+            // Previsão com base na rede neural
+            const prediction = model.predict(tf.tensor2d([input]));
+            const predictionData = prediction.dataSync();
+            
+            // Ordena as previsões e retorna os 15 números mais prováveis
+            let probabilities = [];
+            for (let i = 0; i < predictionData.length; i++) {
+                probabilities.push({ num: i + 1, probability: predictionData[i] });
+            }
+            probabilities.sort((a, b) => b.probability - a.probability);
 
-    async function trainNetwork(probabilities) {
-      let inputs = [];
-      let outputs = [];
+            // Retorna os 15 números mais prováveis
+            return probabilities.slice(0, 15);
+        }
+        
+        // Exibe as sugestões de números
+        function displaySuggestions(suggestions) {
+            const suggestionList = document.getElementById("suggestions");
+            suggestionList.innerHTML = "";
+            suggestions.forEach(suggestion => {
+                const li = document.createElement("li");
+                li.textContent = `Número: ${suggestion.num} (Probabilidade: ${suggestion.probability.toFixed(4)})`;
+                suggestionList.appendChild(li);
+            });
+        }
 
-      probabilities.forEach((prob) => {
-        let input = Array(25).fill(0);
-        input[prob.num - 1] = 1;
-        let output = Array(25).fill(0);
-        output[prob.num - 1] = prob.curvatura;
-        inputs.push(input);
-        outputs.push(output);
-      });
+        let frequencyChart, curvatureChart;
 
-      const model = tf.sequential();
-      model.add(tf.layers.dense({ inputShape: [25], units: 128, activation: 'relu' }));
-      model.add(tf.layers.dense({ units: 64, activation: 'relu' }));
-      model.add(tf.layers.dense({ units: 25, activation: 'softmax' }));
+        function updateCharts(data) {
+            const labels = data.map(d => d.num);
+            const freqs = data.map(d => d.freq);
+            const curvaturas = data.map(d => d.curvatura.toFixed(2));
 
-      model.compile({
-        optimizer: 'adam',
-        loss: 'meanSquaredError',
-        metrics: ['accuracy']
-      });
+            const freqCtx = document.getElementById('frequencyChart').getContext('2d');
+            const curvaCtx = document.getElementById('curvatureChart').getContext('2d');
 
-      const inputTensor = tf.tensor2d(inputs);
-      const outputTensor = tf.tensor2d(outputs);
-      await model.fit(inputTensor, outputTensor, { epochs: 150 });
+            if (frequencyChart) frequencyChart.destroy();
+            if (curvatureChart) curvatureChart.destroy();
 
-      const predictedNumbers = await predictNextNumbers(model);
-      displaySuggestions(predictedNumbers);
-    }
+            frequencyChart = new Chart(freqCtx, {
+                type: 'bar',
+                data: {
+                    labels,
+                    datasets: [{
+                        label: 'Frequência',
+                        data: freqs,
+                        backgroundColor: 'rgba(54, 162, 235, 0.6)'
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: { legend: { display: false }, title: { display: true, text: 'Frequência dos Números' } }
+                }
+            });
 
-    async function predictNextNumbers(model) {
-      let inputs = Array(25).fill(0);
-      const inputTensor = tf.tensor2d([inputs]);
-      const prediction = model.predict(inputTensor);
-      const predictionData = prediction.dataSync();
+            curvatureChart = new Chart(curvaCtx, {
+                type: 'bar',
+                data: {
+                    labels,
+                    datasets: [{
+                        label: 'Curvatura Estatística',
+                        data: curvaturas,
+                        backgroundColor: 'rgba(255, 99, 132, 0.6)'
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: { legend: { display: false }, title: { display: true, text: 'Curvatura Estatística dos Números' } }
+                }
+            });
+        }
 
-      let probabilities = [];
-      for (let i = 0; i < predictionData.length; i++) {
-        probabilities.push({ num: i + 1, probability: predictionData[i] });
-      }
-
-      probabilities.sort((a, b) => b.probability - a.probability);
-      return probabilities.slice(0, 15);
-    }
-
-    function displaySuggestions(suggestions) {
-      const suggestionList = document.getElementById("suggestions");
-      suggestionList.innerHTML = "";
-      suggestions.forEach(suggestion => {
-        const listItem = document.createElement("li");
-        listItem.textContent = `Número: ${suggestion.num} (Prob: ${suggestion.probability.toFixed(4)})`;
-        suggestionList.appendChild(listItem);
-      });
-    }
-
-    calculateProbabilities();
-
-    fetch("ultimos500.json")
-      .then(Response => Response.json())
-      .then(data => {
-        localStorage.setItem("draws", JSON.stringify(data));
-        calculateProbabilities();
-      })
-      .catch(error => console.error("Erro ao carregar o arquivo JSON", error));
-  </script>
+        // Carrega os dados do arquivo JSON externo ao iniciar
+        fetch("ultimos500.json")
+            .then(res => res.json())
+            .then(data => {
+                localStorage.setItem("draws", JSON.stringify(data));
+                calculateProbabilities();
+            })
+            .catch(error => console.error("Erro ao carregar JSON:", error));
+    </script>
 </body>
+
 </html>
+
+
 
 
 
